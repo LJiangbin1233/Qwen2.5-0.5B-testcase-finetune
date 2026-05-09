@@ -12,3 +12,25 @@
 conda create -n qwen_finetune python=3.10 -y
 conda activate qwen_finetune
 pip install -r requirements.txt
+
+数据准备
+原始数据格式参考 data/raw/ 下的 Excel 文件，包含 Measurements（测量文件名）和 Comments（备注）。
+
+执行转换脚本生成 JSONL 训练数据：
+
+bash
+python data/convert_excel_to_jsonl.py
+训练
+bash
+python scripts/train_qwen_6g.py
+训练完成后，LoRA 权重保存在 outputs/qwen_lora_6g/。
+
+测试
+bash
+python scripts/test_model.py
+示例输入输出见 examples/。
+
+模型导出（可选）
+bash
+python scripts/merge_lora.py
+合并后的模型可用于常规推理部署。
